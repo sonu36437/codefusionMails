@@ -86,7 +86,7 @@ const nodemailer = require('nodemailer');
 const cors = require('cors');
 const app = express();
 
-
+// Middleware to parse JSON bodies
 app.use(cors());
 app.use(express.json());
 
@@ -94,7 +94,7 @@ app.get('/',(req,res)=>{
    res.send({mg:"heloow"})
 })
 
-
+// Create transporter object using SMTP transport
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -103,22 +103,22 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-
+// Email sending endpoint
 app.post('/send-email', async (req, res) => {
   try {
-    const { email, name, text,} = req.body;
+    const { to, text } = req.body;
 
     // Check if required fields are present
-    if (!email || !text) {
+    if (!to || !text) {
       return res.status(400).json({ error: 'To and text fields are required' });
     }
 
     // Email options
     const mailOptions = {
       from: process.env.APP_EMAIL,
-      to: "sonu36437@gmail.com",
+      to: to,
       subject: "message from portfolio",
-      html: `<h4>${name}</h4><h4>${email}</h4><br><p>${text}</p>`,
+      html: `<h4>${email}<h4><br> <p>${text}</p>`,
     };
 
     // Send email
