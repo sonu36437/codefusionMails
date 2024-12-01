@@ -28,17 +28,17 @@ const transporter = nodemailer.createTransport({
 // Email sending endpoint
 app.post('/send-email', async (req, res) => {
   try {
-    const { to, text } = req.body;
+    const { email,name, text } = req.body;
 
     // Check if required fields are present
-    if (!to || !text) {
+    if (!email || !text) {
       return res.status(400).json({ error: 'To and text fields are required' });
     }
 
     // Email options
     const mailOptions = {
       from: process.env.APP_EMAIL,
-      to: to,
+      to: "sonu36437@gmail.com",
       subject: "message from portfolio",
       html: `<h4>${email}<h4><br> <p>${text}</p>`,
     };
