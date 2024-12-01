@@ -32,7 +32,7 @@ app.post('/send-email', async (req, res) => {
 
     // Check if required fields are present
     if (!email || !text) {
-      return res.status(400).json({ error: 'To and text fields are required' });
+      return res.status(400).json({ message: 'email and text fields are required' });
     }
 
     // Email options
@@ -48,7 +48,7 @@ app.post('/send-email', async (req, res) => {
     res.status(200).json({ message: 'Email sent successfully' });
   } catch (error) {
     console.error('Error sending email:', error.message);
-    res.status(500).json({ error: 'Failed to send email', details: error.message });
+    res.status(500).json({ message: 'Failed to send email', details: error.message });
   }
 });
 
