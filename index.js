@@ -2,9 +2,11 @@ require('dotenv').config();
 
 const express = require('express');
 const nodemailer = require('nodemailer');
+const cors = require('cors');
 const app = express();
 
 // Middleware to parse JSON bodies
+app.use(cors());
 app.use(express.json());
 
 app.get('/',(req,res)=>{
@@ -25,11 +27,16 @@ app.post('/send-email', async (req, res) => {
   try {
     const { to, text } = req.body;
 
+    // Check if required fields are present
+    if (!to || !text) {
+      return res.status(400).json({ error: 'To and text fields are required' });
+    }
+
     // Email options
     const mailOptions = {
       from: process.env.APP_EMAIL,
       to: to,
-      subject: "message form portfolio",
+      subject: "message from portfolio",
       text: text,
     };
 
@@ -37,8 +44,8 @@ app.post('/send-email', async (req, res) => {
     await transporter.sendMail(mailOptions);
     res.status(200).json({ message: 'Email sent successfully' });
   } catch (error) {
-    console.error('Error sending email:', error);
-    res.status(500).json({ error: 'Failed to send email' });
+    console.error('Error sending email:', error.message);
+    res.status(500).json({ error: 'Failed to send email', details: error.message });
   }
 });
 
