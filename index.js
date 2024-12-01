@@ -7,6 +7,10 @@ const app = express();
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+app.get('/',(req,res)=>{
+   res.send({mg:"heloow"})
+})
+
 // Create transporter object using SMTP transport
 const transporter = nodemailer.createTransport({
   service: 'gmail',
