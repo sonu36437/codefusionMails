@@ -70,11 +70,11 @@ app.post('/send-email', async (req, res) => {
     };
 
     await transporter.sendMail(mailOptions);
-   await mailModel.insertOne({email:email,name:name,message:text,phone_number:phone_number})
+   await mailModel.create({email:email,name:name,message:text,phone_number:phone_number})
     res.status(200).json({ message: 'Email sent successfully' });
   } catch (error) {
     console.error('Error sending email:', error.message);
-    res.status(500).json({ message: 'Failed to send email', details: error.message });
+    res.status(500).json({ message: 'Failed to send email', details: error });
   }
 });
 
