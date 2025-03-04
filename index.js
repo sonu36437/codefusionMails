@@ -5,7 +5,7 @@ const cors = require('cors');
 
 const { connectToDatabase } = require('./connection');
 const mailModel = require('./model/mailData');
-const mongoose = require('mongoose')
+
 const app = express();
 let db;
 
@@ -118,8 +118,8 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, async() => {
 
-  // await connectToDatabase();
-  await mongoose.connect(process.env.CONNECTION_URL)
+  await connectToDatabase();
+
   console.log("connected");
   
 
