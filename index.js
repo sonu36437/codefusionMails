@@ -6,6 +6,16 @@ const cors = require('cors');
 const { connectToDatabase } = require('./connection');
 const mailModel = require('./model/mailData');
 const app = express();
+let db;
+
+
+async function connectToDb(){
+ db=  await connectToDatabase();
+ console.log(db);
+ 
+}
+connectToDb();
+
 
 
 app.use(cors());
@@ -19,7 +29,10 @@ const transporter = nodemailer.createTransport({
 });
 
 app.get('/',async(req,res)=>{
+
+  
   return res.status(200).json({msg:'health fine'});
+
 })
 
 
@@ -99,7 +112,7 @@ app.get('/get-mails/:date', async (req, res) => {
 
 
 const PORT = process.env.PORT || 3000;
- connectToDatabase();
+
 app.listen(PORT, async() => {
 
 
