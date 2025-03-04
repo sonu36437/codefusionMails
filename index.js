@@ -9,12 +9,12 @@ const app = express();
 let db;
 
 
-async function connectToDb(){
- db=  await connectToDatabase();
- console.log(db);
+// async function connectToDb(){
+//  db=  await connectToDatabase();
+//  console.log(db);
  
-}
-connectToDb();
+// }
+
 
 
 
@@ -41,10 +41,12 @@ app.get('/',async(req,res)=>{
 
 app.post('/send-email', async (req, res) => {
   try {
+    await connectToDatabase();
     const { email, name, text ,phone_number} = req.body;
      if(!phone_number){
       return res.status(400).json({ message: 'phone number is required' });
      }
+
     if(!email){
       return res.status(400).json({ message: 'email is required' });
     }
