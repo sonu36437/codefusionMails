@@ -19,17 +19,7 @@ const transporter = nodemailer.createTransport({
 });
 
 app.get('/',async(req,res)=>{
-
-   try{
-    await mailModel.insertOne({email:'sonu3435',name:'sonu'})
-    console.log("inseted data");
-    res.status(200).json({message:"data inserted successuly"});
-    
-   }
-   catch(e){
-    console.log(e)
-    res.status(300).json({message: "email already exist"})
-   }
+  return res.status(200).json({msg:'health fine'});
 })
 
 
