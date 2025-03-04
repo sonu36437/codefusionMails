@@ -5,6 +5,7 @@ const cors = require('cors');
 
 const { connectToDatabase } = require('./connection');
 const mailModel = require('./model/mailData');
+const mongoose = require('mongoose')
 const app = express();
 let db;
 
@@ -41,7 +42,7 @@ app.get('/',async(req,res)=>{
 
 app.post('/send-email', async (req, res) => {
   try {
-    await connectToDatabase();
+ 
     const { email, name, text ,phone_number} = req.body;
      if(!phone_number){
       return res.status(400).json({ message: 'phone number is required' });
@@ -117,6 +118,10 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, async() => {
 
+  // await connectToDatabase();
+  await mongoose.connect(process.env.CONNECTION_URL)
+  console.log("connected");
+  
 
   
   console.log(`Server is running on port ${PORT}`);
