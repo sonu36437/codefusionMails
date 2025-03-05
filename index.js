@@ -106,7 +106,7 @@ app.get('/get-mails/:date', async (req, res) => {
     });
     res.json(mails);
   } catch (error) {
-    res.status(500).json({ error: 'Something went wrong!' });
+    res.status(500).json({ error: 'Something went wrong!', });
   }
 });
 
@@ -116,14 +116,19 @@ app.get('/get-mails/:date', async (req, res) => {
 
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, async() => {
+connectToDatabase().then(()=>{
+  app.listen(PORT, async() => {
 
-  await connectToDatabase();
 
-  console.log("connected");
+
+    console.log("connected");
+    
   
-
+    
+    console.log(`Server is running on port ${PORT}`);
   
-  console.log(`Server is running on port ${PORT}`);
+  });
 
-});
+})
+
+
