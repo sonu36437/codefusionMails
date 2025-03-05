@@ -1,23 +1,26 @@
 const mongoose = require('mongoose');
-require(
-    'dotenv'
-).config();
-let db=null;
+require('dotenv').config();
+
+let cachedDb = null;
 
 async function connectToDatabase() {
-    try {
-     db= await mongoose.connect(process.env.CONNECTION_URL);
- 
-     
+  if (cachedDb) {
+    console.log('Using cached database connection');
+    return cachedDb;
+  }
 
-     
-        console.log("Connected to database");
-        return db;
-    } catch (error) {
-        console.error("Failed to connect to database:", error);
-       
-        process.exit(1); 
-    }
+  try {
+    const db = await mongoose.connect(process.env.CONNECTION_URL, {
+
+    });
+
+    cachedDb = db;
+    console.log('Connected to database');
+    return db;
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    throw new Error('Database connection failed');
+  }
 }
-module.exports = { connectToDatabase };
 
+module.exports = { connectToDatabase };
